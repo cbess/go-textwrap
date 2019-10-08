@@ -28,13 +28,17 @@ func (w WordWrapResult) IsValid() bool {
 func WordWrap(fullText string, width, maxWordCount int) (WordWrapResult, error) {
 	result := WordWrapResult{}
 
+	// TODO: given that strings.Fields is not very efficient, a simple loop over the chars
+	// would be more efficient that the stdlib approach
+	// https://golang.org/src/strings/strings.go
+	
 	// get "words" determined by one or more whitespaces
 	words := strings.Fields(fullText)
 	result.WordCount = len(words)
 
 	// if max word count exceeded, then don't continue the wrap operation
 	if maxWordCount > 0 && result.WordCount > maxWordCount {
-		return result, fmt.Errorf("Exceeded word count: %d > %d", result.WordCount, maxWordCount)
+		return result, fmt.Errorf("exceeded word count: %d > %d", result.WordCount, maxWordCount)
 	}
 
 	// bail fast, if possible
