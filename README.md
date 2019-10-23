@@ -8,7 +8,7 @@ Features:
 
 - Lightweight. Uses only the Go built-in library (no external deps).
 - Simple. Easy to understand code.
-- Counts number of words.
+- Counts number of words and characters.
 - Splits (or groups) text based on character limit (width) per group (each wrap).
 - `100%` test coverage.
 
