@@ -22,6 +22,11 @@ func TestWordWrapSimple(t *testing.T) {
 	if len(result.TextGroups) != 2 {
 		t.Errorf("Wrong group count, should 2 be, got %d", len(result.TextGroups))
 	}
+
+	// there should only be 2 chars because the maxWidth=1
+	if result.CharCount != 2 {
+		t.Errorf("Wrong char count: %d", result.CharCount)
+	}
 }
 
 func TestWordWrapStringRebuild(t *testing.T) {
@@ -43,8 +48,8 @@ func TestWordWrapStringRebuild(t *testing.T) {
 
 func TestWordWrapSingleGroup(t *testing.T) {
 	// no need to wrap, text fits in width
-	origText := "Jesus is God. He Saves by grace through faith alone."
-	result, err := WordWrap(origText, len(origText)+1, 0)
+	origText := "Jesus is God. He Saves by grace alone"
+	result, err := WordWrap(origText, len(origText), 0)
 	if err != nil {
 		t.Error(err)
 	}
@@ -53,8 +58,14 @@ func TestWordWrapSingleGroup(t *testing.T) {
 		t.Error("Expected one text group")
 	}
 
+	if result.CharCount != 37 {
+		t.Errorf("Wrong char count, should be 37, got %d", result.CharCount)
+	}
+}
+
+func TestWordWrapWidthLimit(t *testing.T) {
 	// a width smaller than the largest word
-	result, err = WordWrap("Propitiation", 1, 0)
+	result, err := WordWrap("Propitiation", 1, 0)
 	if err != nil {
 		t.Error(err)
 	}
@@ -62,9 +73,11 @@ func TestWordWrapSingleGroup(t *testing.T) {
 	if len(result.TextGroups) != 1 {
 		t.Error("Expected one text group")
 	}
+}
 
+func TestWordWrapNoText(t *testing.T) {
 	// no words
-	result, err = WordWrap("", 1, 0)
+	result, err := WordWrap("", 1, 0)
 	if err != nil {
 		t.Error(err)
 	}
