@@ -11,6 +11,7 @@ Features:
 - Counts number of words and characters.
 - Splits (or groups) text based on character limit (width) per group (each wrap).
 - `100%` test coverage.
+- [GoDoc](https://godoc.org/github.com/cbess/go-textwrap) documentation
 
 ### Note
 
